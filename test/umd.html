@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+	<title>Short UUIDv4 Test</title>
+
+    <style>
+		* {
+			margin: 0; padding: 0;
+		}
+		*:focus {
+			outline: none;;
+		}
+		div {
+			padding: 5px;
+		}
+        input {
+            width: 100%;
+			padding: 5px;
+            font-family: consolas;
+			box-sizing: border-box;
+        }
+		button {
+			padding: 3px;
+		}
+    </style>
+	<script type="text/javascript" src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+	<script type="text/javascript" src="https://requirejs.org/docs/release/2.3.6/minified/require.js"></script>
+</head>
+<body>
+	<div>
+		<h1>Usage in UMD System</h1>
+	</div>
+	<div>
+        <input id="output" type="text" />
+    </div>
+	<div>
+		<button id="short-uuidv4-generate">Generate</button>
+		<button id="short-uuidv4-translate">Translate</button>
+		<button id="short-uuidv4-shorten-again">Shorten Again</button>
+	</div>
+	<script type="text/javascript">
+		require([
+			"./short-uuidv4.umd.js"
+		], function (module) {
+			let ShortUuidV4 = module.ShortUuidV4;
+			let generator = new ShortUuidV4();
+			document.querySelector("#short-uuidv4-generate").addEventListener("click", function () {
+				let output = document.querySelector("#output");
+				output.value = generator.new();
+			});
+			document.querySelector("#short-uuidv4-translate").addEventListener("click", function () {
+				let output = document.querySelector("#output");
+				output.value = generator.translate(output.value);
+			});
+			document.querySelector("#short-uuidv4-shorten-again").addEventListener("click", function () {
+				let output = document.querySelector("#output");
+				output.value = generator.translate(output.value, ShortUuidV4.BASE_HEX, ShortUuidV4.BASE_DEF);
+			});
+		}, function (err) {
+			console.log(err);
+		});
+	</script>
+</body>
+</html>
